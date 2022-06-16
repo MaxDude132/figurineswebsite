@@ -1,0 +1,93 @@
+[tool]
+
+    [tool.black]
+    line-length = 79
+    target_version = ['py310']
+    skip-string-normalization=true
+
+    [tool.isort]
+    filter_files = true
+    multi_line_output = 3
+    include_trailing_comma = true
+    force_grid_wrap = false
+    line_length = 79
+    skip = ["manage.py", ".git"]
+    skip_glob = ["/migrations/.py","store/settings/*.py"]
+    combine_as_imports = true
+    force_to_top = ["store"]
+    known_future_library = ["future", "_future_"]
+    known_django = ["django"]
+    known_restframework = ["rest_framework"]
+    known_third_party = [
+        "PIL", "analytics", "apiclient", "admin_auto_filters",
+        "anymail", "axes", "asgiref", "celery", "channels" , "corsheaders",
+        "defusedxml", "django_filters", "django_object_actions", "drf_yasg",
+        "email_reply_parser", "environ", "factory", "faker", "freezegun",
+        "google", "googleapiclient", "html2text", "minify_html", "ics", "jinja2",
+        "jwt", "langdetect", "libthumbor", "lxml", "markdown", "object_tools",
+        "openpyxl", "parse", "permission", "phonenumbers", "psycopg2", "pptx",
+        "pytest", "pytracking", "pytz", "recurrence","redis", "requests",  "requests_oauthlib",
+        "responses", "onelogin", "ordered_model", "simple_salesforce", "twilio",
+        "xmltodict", "zeep"
+    ]
+    import_heading_stdlib = "Standard libraries"
+    import_heading_django = "Django"
+    import_heading_restframework = "Rest Framework"
+    import_heading_thirdparty = "Third party"
+    import_heading_firstparty = "Figurine Store"
+    import_heading_localfolder = "Local"
+    default_section = "FIRSTPARTY"
+    sections = [
+        "FUTURE", "STDLIB", "DJANGO", "RESTFRAMEWORK", "THIRDPARTY",
+        "FIRSTPARTY", "LOCALFOLDER"
+    ]
+
+    [tool.coverage]
+        [tool.coverage.run]
+        branch = true
+
+        [tool.coverage.report]
+
+        # Regexes for lines to exclude from consideration
+        exclude_lines = [
+            # Have to re-enable the standard pragma
+            'pragma: no cover',
+            'noqa',
+
+            # Don't complain about missing debug-only code:
+            'def _repr_',
+            'if self\.debug',
+            'if settings.DEBUG:',
+            'if settings.THUMBOR_UNSAFE_URL:',
+            'if TYPE_CHECKING:',
+
+            # Don't complain if tests don't hit defensive assertion code:
+            'raise AssertionError',
+            'raise NotImplementedError',
+
+            # Don't complain if non-runnable code isn't run:
+            'if 0:',
+            'if False:',
+            'if _name_ == .__main__.:'
+        ]
+
+        # omit migrations, tests and settings
+        omit = [
+            "manage.py",
+            "/migrations/",
+            "/tests/",
+            "figurineswebsite/settings/*",
+            "figurineswebsite/asgi.py",
+            "figurineswebsite/wsgi.py",
+            "tests.py",
+            "/venv/"
+        ]
+
+    [tool.pylint]
+        [tool.pylint.MASTER]
+        load-plugins="pylint_django,pylint_celery"
+        django-settings-module="figurineswebsite.settings"
+
+        [tool.pylint.'MESSAGES CONTROL']
+        # We don't add docstrings all over the place and we trust black for indentation
+        disable="missing-module-docstring,missing-class-docstring,missing-function-docstring,bad-continuation"

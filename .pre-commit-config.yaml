@@ -1,0 +1,55 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-yaml
+      - id: check-json
+        exclude: \.devcontainer
+      - id: check-toml
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.32.1
+    hooks:
+      - id: pyupgrade
+        args: [--py310]
+
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: 1.7.0
+    hooks:
+      - id: django-upgrade
+        args: [--target-version, "3.2"]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        additional_dependencies:
+          - toml
+        exclude: (manage.py|\/migrations\/.*\.py|braindate-api\/settings\/.*\.py)
+
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3.10
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          [
+            "flake8-bugbear==22.4.25",
+            "flake8-print==5.0.0",
+            "flake8-pep3101==1.3.0",
+            "flake8-deprecated==1.3",
+            "flake8-debugger==4.1.2",
+            "flake8-comprehensions==3.8.0",
+            "flake8-string-format==0.3.0",
+          ]
